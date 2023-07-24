@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
-//import data from "../data/data";
 import { useEffect, useReducer, useState } from "react";
 import logger from "use-reducer-logger";
 import axios from "axios";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Product from "../components/Product";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -49,25 +50,13 @@ function HomeScreen() {
         ) : error ? (
           <div>{error}</div>
         ) : (
-          products.map((product) => (
-            <div
-              className="w-64 h-96 border border-solid border-black rounded-md p-2 m-2"
-              key={product.slug}
-            >
-              <div className="h-48 flex justify-center items-center">
-                <Link to={`/product/${product.slug}`}>
-                  <img src={product.image} alt={product.name} className="p-2" />
-                </Link>
-              </div>
-              <div className="flex flex-col items-center">
-                <Link to={`/product/${product.slug}`}>
-                  <p>{product.name}</p>
-                </Link>
-                <p>{product.price}</p>
-                <button className="border rounded-md p-2">Add to cart</button>
-              </div>
-            </div>
-          ))
+          <Row>
+            {products.map((product) => (
+              <Col sm={6} md={4} lg={3} className="mb-3" key={product.slug}>
+                <Product product={product}></Product>
+              </Col>
+            ))}
+          </Row>
         )}
       </div>
     </div>
